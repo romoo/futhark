@@ -1,10 +1,8 @@
 <html>
 <head>
 <script type="text/javascript">
-<!--
 
-function updateClock ( )
-{
+function updateClock ( ){
   var cur_time = new Date ( );
 
   var cur_hrs = cur_time.getHours ( );
@@ -12,39 +10,53 @@ function updateClock ( )
   var cur_secs = cur_time.getSeconds ( );
   cur_mins = ( cur_mins < 10 ? "0" : "" ) + cur_mins;
   cur_secs = ( cur_secs < 10 ? "0" : "" ) + cur_secs;
-  cur_hrs = ( cur_hrs > 12 ) ? cur_hrs - 12 : cur_hrs;
+  
   cur_hrs = ( cur_hrs == 0 ) ? 12 : cur_hrs;
   var cur_timeStr = cur_hrs + ":" + cur_mins + ":" + cur_secs;
   document.getElementById("clock").firstChild.nodeValue = cur_timeStr;
-  document.bgColor=(cur_hrs.toString(16)+cur_mins.toString(16)+cur_secs.toString(16))
-
+  
+  hrs_hex = Math.round(cur_hrs * 255 / 24 );
+  mins_hex = Math.round(cur_mins * 255 / 60); 
+  secs_hex = Math.round(cur_secs * 255 / 60);
+  
+  document.bgColor=("rgba("+hrs_hex+","+mins_hex+","+secs_hex+",1)")
 }
 
-// -->
 </script>
 <style type="text/css">
 html, body, p {
  margin: 0;
 }
-
+#box {
+	width: 100%;
+	height: 100%;
+	background: -moz-radial-gradient(50% 50% 45deg, circle farthest-side, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .4) 100%);
+	background: -webkit-gradient(radial, center center, 0, center center, 700, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, .4)));
+}
 span{
+	text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
+	color: #fff;
     position: absolute;
     width: 100%;
-    height: 100px;
+    height: 200px;
     top: 50%;
-    margin-top: -50px;
+    margin-top: -100px;
     filter:alpha(opacity=50);
     -moz-opacity:0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
-    font-size: 65pt;
- text-align: center;
+    font-size: 120pt;
+    text-align: center;
 } 
 
 </style>
 </head>
 <body>
 <body onload="updateClock(); setInterval('updateClock()', 1 )">
-<span id="clock">&nbsp;</span>
+<div id="box">
+	<span id="clock">&nbsp;</span>
+</div>
+
+
 </body>
 </html>
